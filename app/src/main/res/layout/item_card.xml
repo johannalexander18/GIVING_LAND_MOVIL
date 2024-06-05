@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="?attr/selectableItemBackground"
+    android:layout_margin="8dp"
+    android:padding="8dp"
+    >
+
+
+    <!-- Contenedor de la imagen del producto y el botón de favorito -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/white">
+
+        <!-- Imagen del producto -->
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/producto1" />
+
+        <!-- Botón de favorito -->
+        <ImageButton
+            android:id="@+id/favoriteButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="top|end"
+            android:background="@color/white"
+            android:contentDescription="@string/favorite_button"
+            android:padding="8dp"
+            android:src="@drawable/ic_favorite" />
+    </FrameLayout>
+
+    <!-- Contenedor de texto -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="#EDEDED">
+
+        <!-- Título del producto -->
+        <TextView
+            android:id="@+id/itemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Celular"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingBottom="4dp"/>
+
+        <!-- Descripción del producto -->
+        <TextView
+            android:id="@+id/itemDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Se intercambia iphone por ..."
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="14sp"
+            android:paddingBottom="4dp"/>
+
+        <!-- Texto adicional -->
+        <TextView
+            android:id="@+id/itemAdditional"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intercambio"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="14sp"
+            android:paddingBottom="4dp"/>
+
+        <!-- Ubicación -->
+        <TextView
+            android:id="@+id/itemLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Popayán"
+            android:textSize="14sp"/>
+    </LinearLayout>
+</LinearLayout>

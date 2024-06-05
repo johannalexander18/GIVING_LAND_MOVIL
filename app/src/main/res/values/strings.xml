@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Giving Land v1</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Descripciones de botones -->
+    <string name="filter_button">Filtro</string>
+    <string name="favorite_button">Favorito</string>
+
+    <!-- Mensajes -->
+    <string name="location">Popayán</string>
+    <string name="celular">Celular</string>
+    <string name="description">Se intercambia iphone por ...</string>
+    <string name="location_popayan">Popayán</string>
+</resources>
