@@ -14,6 +14,24 @@
         android:theme="@style/Theme.GivingLandV1"
         tools:targetApi="31">
         <activity
+            android:name=".RegistroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CodigoregistroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CorreoregistroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".passwordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CodigoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CorreoActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
