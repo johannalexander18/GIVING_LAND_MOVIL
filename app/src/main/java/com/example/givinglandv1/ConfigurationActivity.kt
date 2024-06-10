@@ -1,20 +1,36 @@
 package com.example.givinglandv1
 
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
+import com.example.givinglandv1.databinding.ActivityConfigurationBinding
 
 class ConfigurationActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityConfigurationBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_configuration)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityConfigurationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Configurar listeners para cada botón
+        binding.changePasswordButton.setOnClickListener {
+            // Lógica para cambiar contraseña
+            Toast.makeText(this, "Cambiar Contraseña seleccionado", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.deleteAccountButton.setOnClickListener {
+            // Lógica para eliminar cuenta
+            Toast.makeText(this, "Eliminar Cuenta seleccionado", Toast.LENGTH_SHORT).show()
+        }
+
+        // Configurar el botón de cerrar sesión
+        binding.logoutButton.setOnClickListener {
+            // Mostrar el fragmento CerrarSesionFragment
+            val cerrarSesionFragment = CerrarsesionFragment()
+            cerrarSesionFragment.show(supportFragmentManager, "CerrarSesionFragment")
         }
     }
 }
