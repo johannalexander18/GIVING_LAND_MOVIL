@@ -1,70 +1,62 @@
 package com.example.givinglandv1
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
+import com.example.givinglandv1.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var viewModel: MainViewModel
-    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CardAdapter
-
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        recyclerView = rootView.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = GridLayoutManager(context, 2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         adapter = CardAdapter(viewModel.items.value ?: emptyList()) { item ->
             viewModel.toggleFavorite(item)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.contenedor_fragment, ItemdetailFragment.newInstance(item))
+                .addToBackStack(null)
+                .commit()
         }
-        recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
+        binding.recyclerView.adapter = adapter
 
-        return rootView
-    }
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter(newText ?: "")
+                return true
+            }
+        })
+
         viewModel.items.observe(viewLifecycleOwner, { items ->
             adapter.updateItems(items)
         })
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

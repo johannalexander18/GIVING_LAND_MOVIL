@@ -1,47 +1,59 @@
 package com.example.givinglandv1
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.givinglandv1.databinding.ItemCardBinding
 
-class CardAdapter(private var items: List<Item>, private val onFavoriteClick: (Item) -> Unit) :
-    RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
+class CardAdapter(private var itemList: List<Item>, private val listener: (Item) -> Unit) :
+    RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemCardBinding.inflate(inflater, parent, false)
-        return CardViewHolder(binding)
+    private var itemListFiltered: List<Item> = itemList
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        val item = items[position]
-        holder.bind(item, onFavoriteClick)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val currentItem = itemListFiltered[position]
+        holder.bind(currentItem)
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int {
+        return itemListFiltered.size
+    }
+
+    inner class ViewHolder(private val binding: ItemCardBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Item) {
+            binding.apply {
+                itemTitle.text = item.title
+                itemDescription.text = item.description
+                itemAdditional.text = item.additionalInfo
+                itemLocation.text = item.location
+
+                root.setOnClickListener { listener(item) }
+
+                favoriteButton.setImageResource(if (item.isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite)
+                favoriteButton.setOnClickListener {
+                    listener(item)
+                }
+            }
+        }
+    }
 
     fun updateItems(newItems: List<Item>) {
-        items = newItems
+        itemList = newItems
+        itemListFiltered = newItems
         notifyDataSetChanged()
     }
 
-    inner class CardViewHolder(private val binding: ItemCardBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: Item, onFavoriteClick: (Item) -> Unit) {
-            binding.itemImage.setImageResource(item.imageResId)
-            binding.itemTitle.text = item.title
-            binding.itemDescription.text = item.description
-            binding.itemAdditional.text = item.additionalInfo
-            binding.itemLocation.text = item.location
-            binding.favoriteButton.setImageResource(
-                if (item.isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite
-            )
-            binding.favoriteButton.setOnClickListener {
-                onFavoriteClick(item)
-            }
+    fun filter(query: String) {
+        itemListFiltered = if (query.isEmpty()) {
+            itemList
+        } else {
+            itemList.filter { it.title.contains(query, ignoreCase = true) }
         }
+        notifyDataSetChanged()
     }
 }
