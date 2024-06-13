@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="5dp">
 
     <ImageView
         android:id="@+id/imageProfile"
@@ -25,13 +27,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nombre Persona"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/noto_sans"
+            android:textColor="@color/colordos"/>
 
         <TextView
             android:id="@+id/textLastMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Conversación"
-            android:textColor="#808080" />
+            android:textColor="#808080"
+            android:fontFamily="@font/noto_sans"/>
     </LinearLayout>
 </LinearLayout>

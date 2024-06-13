@@ -4,32 +4,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/colorcinco">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <!--android:src="@drawable/ic_logo"-->
-
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_logo"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="nombres"
         android:inputType="textEmailAddress"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/noto_sans"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Apellidos"
         android:inputType="textEmailAddress"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/noto_sans"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Contraseña"
         android:inputType="textPassword"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/noto_sans"/>
 
 
     <Button
@@ -37,7 +40,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Registrarse"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/noto_sans"
+        android:backgroundTint="@color/colordos"/>
 
 
 </LinearLayout>

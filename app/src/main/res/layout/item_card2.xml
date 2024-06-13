@@ -10,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="@color/white">
+        android:background="@color/coloruno">
 
         <ImageView
             android:id="@+id/itemImage"
@@ -24,7 +24,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_gravity="top|end"
-            android:background="@color/white"
+            android:background="@color/coloruno"
             android:padding="8dp"
             android:src="@drawable/ic_edit"/>
     </FrameLayout>

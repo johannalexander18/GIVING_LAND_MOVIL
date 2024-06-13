@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="?attr/selectableItemBackground"
-    android:layout_margin="8dp"
+    android:layout_margin="5dp"
     android:padding="8dp"
     >
 
@@ -12,8 +12,8 @@
     <!-- Contenedor de la imagen del producto y el botón de favorito -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@color/white">
+        android:layout_height="170dp"
+        android:background="@color/colortres">
 
         <!-- Imagen del producto -->
         <ImageView
@@ -29,7 +29,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_gravity="top|end"
-            android:background="@color/white"
+            android:background="@color/coloruno"
             android:contentDescription="@string/favorite_button"
             android:padding="8dp"
             android:src="@drawable/ic_favorite" />
@@ -41,28 +41,31 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="8dp"
-        android:background="#EDEDED">
+        android:background="@color/coloruno">
 
         <!-- Título del producto -->
         <TextView
             android:id="@+id/itemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginBottom="5dp"
             android:text="Celular"
-            android:textStyle="bold"
             android:textSize="16sp"
-            android:paddingBottom="4dp"/>
+            android:textStyle="bold"
+            android:fontFamily="@font/noto_sans"/>
 
         <!-- Descripción del producto -->
         <TextView
             android:id="@+id/itemDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Se intercambia iphone por ..."
             android:maxLines="1"
             android:ellipsize="end"
-            android:textSize="14sp"
-            android:paddingBottom="4dp"/>
+            android:textSize="15sp"
+            android:paddingBottom="4dp"
+            android:fontFamily="@font/noto_sans"/>
 
         <!-- Texto adicional -->
         <TextView
@@ -70,9 +73,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Intercambio"
-            android:textColor="@android:color/holo_green_dark"
+            android:textColor="@color/colordos"
             android:textSize="14sp"
-            android:paddingBottom="4dp"/>
+            android:paddingBottom="4dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/noto_sans"/>
 
         <!-- Ubicación -->
         <TextView
@@ -80,6 +85,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Popayán"
-            android:textSize="14sp"/>
+            android:textSize="15sp"
+            android:fontFamily="@font/noto_sans"
+            android:textStyle="bold"/>
     </LinearLayout>
 </LinearLayout>

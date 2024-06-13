@@ -3,12 +3,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/colorcinco">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-        <!--android:src="@drawable/ic_logo"-->
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_logo"/>
+
 
     <EditText
         android:id="@+id/email"
@@ -40,13 +42,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Iniciar sesión"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/colordos"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Iniciar sesión con Google"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/colordos"/>
 
     <TextView
         android:layout_width="wrap_content"

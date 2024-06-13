@@ -19,14 +19,15 @@
             android:text="Perfil"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:fontFamily="@font/noto_sans"
+            android:textColor="@color/colordos"/>
 
         <ImageButton
             android:id="@+id/configButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_configuration"
-
             android:background="?attr/selectableItemBackground"
             android:layout_gravity="end"/>
     </LinearLayout>

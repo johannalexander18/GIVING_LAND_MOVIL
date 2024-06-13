@@ -22,7 +22,7 @@ class MainViewModel : ViewModel() {
                     Uri.parse("android.resource://com.example.givinglandv1/drawable/producto1")
                 ),
                 title = "Celular",
-                description = "Se intercambia iphone por ...",
+                description = "Se intercambia iphone por   dmfjsnfdsnmfdsf sdnfdsfnsdfdfns d sfnsdnfdsnfn c ...",
                 additionalInfo = "Intercambio",
                 location = "Popayán",
                 isFavorite = false

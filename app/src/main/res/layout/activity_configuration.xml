@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/colorcinco">
 
     <Button
         android:id="@+id/changePasswordButton"
@@ -11,7 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Cambiar Contraseña"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:fontFamily="@font/noto_sans"
+        android:backgroundTint="@color/colordos"/>
 
     <Button
         android:id="@+id/deleteAccountButton"
@@ -19,13 +22,17 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Eliminar Cuenta"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:fontFamily="@font/noto_sans"
+        android:backgroundTint="@color/colordos"/>
 
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cerrar Sesión"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:fontFamily="@font/noto_sans"
+        android:backgroundTint="@color/colordos"/>
 
 </LinearLayout>

@@ -4,11 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/colorcinco">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_logo"/>
 
     <EditText
         android:id="@+id/email_recovery"
@@ -16,12 +18,15 @@
         android:layout_height="wrap_content"
         android:hint="Correo electrónico"
         android:inputType="textEmailAddress"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/noto_sans" />
 
     <Button
         android:id="@+id/send_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enviar código"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/noto_sans"
+        android:backgroundTint="@color/colordos"/>
 </LinearLayout>
