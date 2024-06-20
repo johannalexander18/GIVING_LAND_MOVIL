@@ -1,9 +1,8 @@
 package com.example.givinglandv1
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.givinglandv1.databinding.ActivityConfigurationBinding
 
 class ConfigurationActivity : AppCompatActivity() {
@@ -17,20 +16,25 @@ class ConfigurationActivity : AppCompatActivity() {
 
         // Configurar listeners para cada botón
         binding.changePasswordButton.setOnClickListener {
-            // Lógica para cambiar contraseña
-            Toast.makeText(this, "Cambiar Contraseña seleccionado", Toast.LENGTH_SHORT).show()
+            // Aquí puedes implementar la lógica para cambiar la contraseña si lo deseas
         }
 
         binding.deleteAccountButton.setOnClickListener {
-            // Lógica para eliminar cuenta
-            Toast.makeText(this, "Eliminar Cuenta seleccionado", Toast.LENGTH_SHORT).show()
+            // Iniciar la actividad de ingreso de contraseña
+            val intent = Intent(this, IngresarpasswordActivity::class.java)
+            startActivity(intent)
         }
 
-        // Configurar el botón de cerrar sesión
         binding.logoutButton.setOnClickListener {
-            // Mostrar el fragmento CerrarSesionFragment
+            // Mostrar el fragmento de cerrar sesión como originalmente lo tenías
             val cerrarSesionFragment = CerrarsesionFragment()
             cerrarSesionFragment.show(supportFragmentManager, "CerrarSesionFragment")
+        }
+
+        // Verificar si debemos mostrar el diálogo de confirmación
+        if (intent.getBooleanExtra("SHOW_CONFIRMATION_DIALOG", false)) {
+            val confirmarEliminacionFragment = ConfirmacioneliminacionFragment()
+            confirmarEliminacionFragment.show(supportFragmentManager, "ConfirmarEliminacionFragment")
         }
     }
 }
