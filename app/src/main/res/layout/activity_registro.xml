@@ -11,20 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_logo"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="nombres"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/noto_sans"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Apellidos"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/noto_sans"/>
+
 
     <EditText
         android:layout_width="match_parent"
