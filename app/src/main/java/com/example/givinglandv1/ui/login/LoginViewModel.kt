@@ -10,15 +10,18 @@ import com.example.givinglandv1.data.api.RetrofitInstance
 import com.example.givinglandv1.data.model.LoginRequest
 import com.example.givinglandv1.data.model.LoginResponse
 import com.example.givinglandv1.data.model.LoginResult
+import com.example.givinglandv1.util.SharedPrefs
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
+
 
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
+    private val sharedPrefs = SharedPrefs(application)
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
@@ -29,6 +32,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     if (!authToken.isNullOrEmpty()) {
                         saveToken(authToken)
                         verifyToken(authToken)
+                    } else {
+                        _loginResult.postValue(LoginResult(success = false))
                     }
                 } else {
                     _loginResult.postValue(LoginResult(success = false))
@@ -53,7 +58,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun saveToken(token: String) {
-        val sharedPref = getApplication<Application>().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        sharedPref.edit().putString("auth_token", token).apply()
+        sharedPrefs.authToken = token
     }
 }
