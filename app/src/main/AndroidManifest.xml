@@ -23,13 +23,13 @@
             android:name=".ConfigurationActivity"
             android:exported="false" />
         <activity
-            android:name=".RegistroActivity"
+            android:name=".ui.register.RegistroActivity"
             android:exported="false" />
         <activity
             android:name=".CodigoregistroActivity"
             android:exported="false" />
         <activity
-            android:name=".RegistroActivity"
+            android:name=".ui.register.RegistroActivity"
             android:exported="false" />
         <activity
             android:name=".passwordActivity"

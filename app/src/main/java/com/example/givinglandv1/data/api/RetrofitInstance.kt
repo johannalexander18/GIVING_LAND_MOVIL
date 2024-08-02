@@ -1,6 +1,5 @@
 package com.example.givinglandv1.data.api
 
-import com.example.givinglandv1.MyApplication
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

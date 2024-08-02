@@ -1,20 +1,16 @@
 package com.example.givinglandv1.ui.login
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.givinglandv1.data.api.RetrofitInstance
-import com.example.givinglandv1.data.model.LoginRequest
-import com.example.givinglandv1.data.model.LoginResponse
-import com.example.givinglandv1.data.model.LoginResult
+import com.example.givinglandv1.data.model.login.LoginRequest
+import com.example.givinglandv1.data.model.login.LoginResult
 import com.example.givinglandv1.util.SharedPrefs
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import retrofit2.Response
-
 
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {

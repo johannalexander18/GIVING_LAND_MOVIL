@@ -20,24 +20,29 @@
         android:inputType="textEmailAddress"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/noto_sans"/>
+
     <EditText
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ingresa tu nombre"
+        android:hint="Ingresa tu nombre"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/noto_sans"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Crea tu contraseña"
         android:inputType="textPassword"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/noto_sans"/>
+
     <EditText
+        android:id="@+id/password_confirmation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="crea tu contraseña"
-        android:inputType="textPassword"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/noto_sans"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="confirma tu contraseña"
+        android:hint="Confirma tu contraseña"
         android:inputType="textPassword"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/noto_sans"/>
