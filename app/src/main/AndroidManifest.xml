@@ -29,7 +29,7 @@
             android:name=".CodigoregistroActivity"
             android:exported="false" />
         <activity
-            android:name=".CorreoregistroActivity"
+            android:name=".RegistroActivity"
             android:exported="false" />
         <activity
             android:name=".passwordActivity"

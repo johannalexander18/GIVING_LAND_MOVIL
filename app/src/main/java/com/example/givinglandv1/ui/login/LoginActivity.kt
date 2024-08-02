@@ -1,26 +1,16 @@
 package com.example.givinglandv1.ui.login
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.givinglandv1.CorreoActivity
-import com.example.givinglandv1.CorreoregistroActivity
+import com.example.givinglandv1.RegistroActivity
 import com.example.givinglandv1.MainActivity
 import com.example.givinglandv1.MyApplication
-import com.example.givinglandv1.R
-import com.example.givinglandv1.data.api.RetrofitInstance
-import com.example.givinglandv1.data.model.LoginRequest
 import com.example.givinglandv1.databinding.ActivityLoginBinding
-import retrofit2.Callback
 
 
 class LoginActivity : AppCompatActivity() {
@@ -40,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.forgotRegistro.setOnClickListener {
-            val intent = Intent(this, CorreoregistroActivity::class.java)
+            val intent = Intent(this, RegistroActivity::class.java)
             startActivity(intent)
         }
 
