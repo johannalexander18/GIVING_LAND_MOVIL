@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.givinglandv1.ItemdetailFragment
 import com.example.givinglandv1.R
 
 import com.example.givinglandv1.databinding.FragmentHomeBinding
@@ -40,11 +37,10 @@ class HomeFragment : Fragment() {
         // Inicializa el adaptador con una lista vacía
         adapter = CardAdapter(emptyList()) { item ->
             // Acción cuando se hace clic en un item
-           /*viewModel.toggleFavorite(item)
             parentFragmentManager.beginTransaction()
                 .replace(R.id.contenedor_fragment, ItemdetailFragment.newInstance(item))
                 .addToBackStack(null)
-                .commit()*/
+                .commit()
 
         }
 

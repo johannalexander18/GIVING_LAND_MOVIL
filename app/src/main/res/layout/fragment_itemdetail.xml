@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".ItemdetailFragment">
+    tools:context=".ui.posts.ItemdetailFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="45dp"
-        android:padding="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center_vertical">
 
         <ImageButton
@@ -27,7 +27,7 @@
             android:id="@+id/imageProfile"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="15dp"
             android:scaleType="centerCrop"
             android:src="@drawable/avatar"
             android:background="@drawable/circle_background" />
