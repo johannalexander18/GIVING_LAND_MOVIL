@@ -71,7 +71,13 @@ dependencies {
 
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    implementation ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("androidx.databinding:databinding-runtime:4.1.3")
+    implementation ("androidx.databinding:databinding-common:4.1.3")
 
+
+    implementation ("com.squareup.picasso:picasso:2.71828")
 
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)

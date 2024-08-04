@@ -5,6 +5,8 @@ import com.example.givinglandv1.data.model.login.LoginResponse
 import com.example.givinglandv1.data.model.register.RegisterRequest
 import com.example.givinglandv1.data.model.register.RegisterResponse
 import com.example.givinglandv1.data.model.User
+import com.example.givinglandv1.data.model.posts.Post
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -23,6 +25,7 @@ interface UserApi {
     @GET("logout")
     suspend fun logout(@Header("Authorization") authToken: String): Response<Void>
 
-
+    @GET("posts")
+    suspend fun getPosts(@Query("included") included: String = "images"): Response<List<Post>>
 
 }

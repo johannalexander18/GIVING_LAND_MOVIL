@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HomeFragment"
+    tools:context=".ui.posts.HomeFragment"
     android:background="@color/colorcinco">
 
     <androidx.appcompat.widget.SearchView
@@ -17,34 +17,7 @@
         android:layout_marginHorizontal="10dp"
         android:background="@color/coloruno"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="15dp"
-        android:paddingHorizontal="20dp"
-        android:background="@color/colorcinco">
 
-        <Button
-            android:id="@+id/categoryFilterButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="140dp"
-            android:text="Categoría"
-            android:fontFamily="@font/noto_sans"
-            android:backgroundTint="@color/colordos"/>
-
-        <Button
-            android:id="@+id/locationFilterButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Ubicación"
-            android:fontFamily="@font/noto_sans"
-            android:backgroundTint="@color/colordos"/>
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

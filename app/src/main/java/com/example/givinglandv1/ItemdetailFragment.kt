@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.givinglandv1.databinding.FragmentItemdetailBinding
 
-class ItemdetailFragment : Fragment() {
+class ItemdetailFragment : Fragment() /*{
 
     private var _binding: FragmentItemdetailBinding? = null
     private val binding get() = _binding!!
@@ -57,4 +57,4 @@ class ItemdetailFragment : Fragment() {
                 }
             }
     }
-}
+}*/
