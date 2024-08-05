@@ -36,7 +36,7 @@ class CardAdapter(
 
             // Cargar la primera imagen
             if (!post.images.isNullOrEmpty()) {
-                val imageUrl = "http://192.168.0.14:8000/storage/${post.images[0].url}"
+                val imageUrl = "http://192.168.0.14:8001/storage/${post.images[0].url}"
                 Glide.with(binding.itemImage.context)
                     .load(imageUrl)
                     .error(R.drawable.producto1)

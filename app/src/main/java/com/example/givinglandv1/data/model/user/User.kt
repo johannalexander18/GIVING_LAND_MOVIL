@@ -1,4 +1,4 @@
-package com.example.givinglandv1.data.model
+package com.example.givinglandv1.data.model.user
 
 data class User(
     val id: Int,

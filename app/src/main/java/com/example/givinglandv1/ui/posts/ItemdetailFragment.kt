@@ -38,7 +38,7 @@ class ItemdetailFragment : Fragment() {
             binding.itemLocation.text = it.location_id.toString()
 
             // Configura el ViewPager para mostrar las imágenes
-            val imageUrls = it.images?.map { image -> "http://192.168.0.14:8000/storage/${image.url}" } ?: emptyList()
+            val imageUrls = it.images?.map { image -> "http://192.168.0.14:8001/storage/${image.url}" } ?: emptyList()
             val adapter = ImageePagerAdapter(imageUrls)
             binding.imageViewPager.adapter = adapter
         }
