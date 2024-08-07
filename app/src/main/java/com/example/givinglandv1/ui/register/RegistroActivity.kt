@@ -2,15 +2,12 @@ package com.example.givinglandv1.ui.register
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.givinglandv1.MainActivity
+import com.example.givinglandv1.ui.MainActivity
 import com.example.givinglandv1.MyApplication
-import com.example.givinglandv1.R
 import com.example.givinglandv1.databinding.ActivityRegistroBinding
 
 

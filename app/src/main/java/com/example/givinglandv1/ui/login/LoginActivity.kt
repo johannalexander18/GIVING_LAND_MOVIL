@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.givinglandv1.CorreoActivity
 import com.example.givinglandv1.ui.register.RegistroActivity
-import com.example.givinglandv1.MainActivity
+import com.example.givinglandv1.ui.MainActivity
 import com.example.givinglandv1.MyApplication
 import com.example.givinglandv1.databinding.ActivityLoginBinding
 

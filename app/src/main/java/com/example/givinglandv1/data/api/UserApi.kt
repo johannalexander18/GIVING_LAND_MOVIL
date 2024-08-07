@@ -2,6 +2,7 @@ package com.example.givinglandv1.data.api
 
 import com.example.givinglandv1.data.model.login.LoginRequest
 import com.example.givinglandv1.data.model.login.LoginResponse
+import com.example.givinglandv1.data.model.posts.Location
 import com.example.givinglandv1.data.model.register.RegisterRequest
 import com.example.givinglandv1.data.model.register.RegisterResponse
 import com.example.givinglandv1.data.model.user.User
@@ -29,5 +30,8 @@ interface UserApi {
 
     @GET("posts")
     suspend fun getPosts(@Query("included") included: String = "images"): Response<List<Post>>
+
+    @GET("locations")
+    suspend fun getLocations(): Response<List<Location>>
 
 }

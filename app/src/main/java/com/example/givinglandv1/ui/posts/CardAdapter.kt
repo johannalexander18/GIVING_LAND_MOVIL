@@ -1,5 +1,6 @@
 package com.example.givinglandv1.ui.posts
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,21 +19,28 @@ import com.bumptech.glide.request.target.Target
 import com.example.givinglandv1.R
 import com.example.givinglandv1.data.model.posts.Post
 import com.example.givinglandv1.databinding.ItemCardBinding
+import com.example.givinglandv1.util.SharedPrefs
 import com.squareup.picasso.Picasso
 
 class CardAdapter(
     private var items: List<Post>,
-    private val onItemClick: (Post) -> Unit
+    private val onItemClick: (Post, String) -> Unit,
+    private val context: Context
 ) : RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
 
     private var filteredItems: List<Post> = items
+    private val sharedPrefs = SharedPrefs(context)
 
     inner class CardViewHolder(val binding: ItemCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
             binding.itemTitle.text = post.name
             binding.itemDescription.text = post.description
             binding.itemAdditional.text = post.purpose
-            binding.itemLocation.text = post.location_id.toString()
+
+            // Obtener el municipio usando el location_id
+            val location = sharedPrefs.getLocationById(post.location_id)
+            val municipio = location?.municipio ?: "Desconocido"
+            binding.itemLocation.text = municipio
 
             // Cargar la primera imagen
             if (!post.images.isNullOrEmpty()) {
@@ -46,7 +54,7 @@ class CardAdapter(
             }
 
             binding.root.setOnClickListener {
-                onItemClick(post)
+                onItemClick(post, municipio)
             }
         }
     }

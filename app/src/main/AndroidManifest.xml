@@ -22,12 +22,7 @@
         <activity
             android:name=".ConfigurationActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.register.RegistroActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CodigoregistroActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ui.register.RegistroActivity"
             android:exported="false" />
@@ -44,7 +39,7 @@
             android:name=".ui.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"

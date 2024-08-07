@@ -16,6 +16,7 @@ class ItemdetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var post: Post? = null
+    private var municipio: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,18 +31,20 @@ class ItemdetailFragment : Fragment() {
 
         // Obtén los datos pasados a este fragmento
         post = arguments?.getParcelable("post")
+        municipio = arguments?.getString("municipio")
 
         post?.let {
             binding.itemTitle.text = it.name
             binding.itemDescription.text = it.description
             binding.itemAdditional.text = it.purpose
-            binding.itemLocation.text = it.location_id.toString()
+            binding.itemLocation.text = municipio ?: "Desconocido"
 
             // Configura el ViewPager para mostrar las imágenes
             val imageUrls = it.images?.map { image -> "http://192.168.0.14:8001/storage/${image.url}" } ?: emptyList()
             val adapter = ImageePagerAdapter(imageUrls)
             binding.imageViewPager.adapter = adapter
         }
+
         val buttonBack: ImageButton = view.findViewById(R.id.buttonBack)
         buttonBack.setOnClickListener {
             closeFragment()
@@ -52,14 +55,16 @@ class ItemdetailFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
     private fun closeFragment() {
         parentFragmentManager.popBackStack()
     }
 
     companion object {
-        fun newInstance(post: Post) = ItemdetailFragment().apply {
+        fun newInstance(post: Post, municipio: String) = ItemdetailFragment().apply {
             arguments = Bundle().apply {
                 putParcelable("post", post)
+                putString("municipio", municipio)
             }
         }
     }

@@ -34,15 +34,14 @@ class HomeFragment : Fragment() {
         // Inicializa el ViewModel
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        // Inicializa el adaptador con una lista vacía
-        adapter = CardAdapter(emptyList()) { item ->
+        // Inicializa el adaptador con una lista vacía y pasa el contexto
+        adapter = CardAdapter(emptyList(), { item, municipio ->
             // Acción cuando se hace clic en un item
             parentFragmentManager.beginTransaction()
-                .replace(R.id.contenedor_fragment, ItemdetailFragment.newInstance(item))
+                .replace(R.id.contenedor_fragment, ItemdetailFragment.newInstance(item, municipio))
                 .addToBackStack(null)
                 .commit()
-
-        }
+        }, requireContext())
 
         // Configura el RecyclerView
         binding.recyclerView.layoutManager = GridLayoutManager(context, 2)

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.givinglandv1.databinding.ItemCard2Binding
+import com.example.givinglandv1.ui.MainActivity
 
 class PublicationAdapter(private val publications: List<Publication>) : RecyclerView.Adapter<PublicationAdapter.ViewHolder>() {
 

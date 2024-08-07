@@ -2,6 +2,9 @@ package com.example.givinglandv1.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.givinglandv1.data.model.posts.Location
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 class SharedPrefs(context: Context) {
@@ -13,4 +16,20 @@ class SharedPrefs(context: Context) {
         set(value) {
             prefs.edit().putString("auth_token", value).apply()
         }
+
+    var locations: String?
+        get() = prefs.getString("locations", null)
+        set(value) {
+            prefs.edit().putString("locations", value).apply()
+        }
+
+    fun getLocationById(locationId: Int): Location? {
+        val json = locations
+        if (json != null) {
+            val type = object : TypeToken<List<Location>>() {}.type
+            val locationList: List<Location> = Gson().fromJson(json, type)
+            return locationList.find { it.id == locationId }
+        }
+        return null
+    }
 }

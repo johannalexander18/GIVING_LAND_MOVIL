@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.givinglandv1.data.api.RetrofitInstance
 import com.example.givinglandv1.data.api.UserApi
 import com.example.givinglandv1.databinding.FragmentCerrarsesionBinding
+import com.example.givinglandv1.ui.MainActivity
 import com.example.givinglandv1.util.SharedPrefs
 import kotlinx.coroutines.launch
 
