@@ -9,6 +9,9 @@ import com.example.givinglandv1.data.model.register.RegisterResponse
 import com.example.givinglandv1.data.model.user.User
 import com.example.givinglandv1.data.model.posts.Post
 import com.example.givinglandv1.data.model.user.ProfileResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -37,5 +40,18 @@ interface UserApi {
 
     @GET("categories")
     suspend fun getCategories(): Response<List<Category>>
+
+    @Multipart
+    @POST("posts")
+    suspend fun createPost(
+        @Header("Authorization") authToken: String,
+        @Part("name") name: RequestBody,
+        @Part("purpose") purpose: RequestBody,
+        @Part("expected_item") expectedItem: RequestBody?,
+        @Part("description") description: RequestBody,
+        @Part("location_id") locationId: RequestBody,
+        @Part("category_id") categoryId: RequestBody,
+        @Part images: List<MultipartBody.Part>
+    ): Response<ResponseBody>
 
 }

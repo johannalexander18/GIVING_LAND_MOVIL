@@ -19,11 +19,14 @@ import com.example.givinglandv1.databinding.FragmentAddBinding
 import com.example.givinglandv1.ui.posts.CategoryViewModel
 import com.example.givinglandv1.ui.posts.HomeFragment
 import com.example.givinglandv1.ui.posts.LocationViewModel
+import com.example.givinglandv1.ui.publicar.PublicarViewModel
+import com.example.givinglandv1.util.SharedPrefs
 import java.io.ByteArrayOutputStream
 
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
 
 class AddFragment : Fragment() {
 
@@ -36,6 +39,8 @@ class AddFragment : Fragment() {
 
     private lateinit var locationViewModel: LocationViewModel
     private lateinit var categoryViewModel: CategoryViewModel
+    private lateinit var sharedPrefs: SharedPrefs
+    private lateinit var publicarViewModel: PublicarViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +56,9 @@ class AddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sharedPrefs = SharedPrefs(requireContext())
+        publicarViewModel = ViewModelProvider(this).get(PublicarViewModel::class.java)
 
         imagePagerAdapter = ImagePagerAdapter(requireContext(), imageUriList) { position ->
             imageUriList.removeAt(position)
@@ -78,12 +86,13 @@ class AddFragment : Fragment() {
         }
 
         binding.btnPublish.setOnClickListener {
-            Toast.makeText(requireContext(), "Artículo publicado", Toast.LENGTH_SHORT).show()
+            createPost()
         }
 
         // Set up spinners
         val movements = arrayOf("Donaciones", "Intercambio")
-        val movementAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, movements)
+        val movementAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, movements)
         movementAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerMovementType.adapter = movementAdapter
 
@@ -94,7 +103,8 @@ class AddFragment : Fragment() {
         // Observe categories
         categoryViewModel.categories.observe(viewLifecycleOwner) { categories ->
             val categoryNames = categories.map { it.name }
-            val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryNames)
+            val categoryAdapter =
+                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryNames)
             categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinnerCategoria.adapter = categoryAdapter
         }
@@ -102,7 +112,8 @@ class AddFragment : Fragment() {
         // Observe locations
         locationViewModel.locations.observe(viewLifecycleOwner) { locations ->
             val locationNames = locations.map { it.municipio }
-            val locationAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, locationNames)
+            val locationAdapter =
+                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, locationNames)
             locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinnerMunicipio.adapter = locationAdapter
         }
@@ -127,7 +138,11 @@ class AddFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && data != null) {
             if (imageUriList.size >= 5) {
-                Toast.makeText(requireContext(), "Solo puedes subir un máximo de 5 imágenes", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Solo puedes subir un máximo de 5 imágenes",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return
             }
             when (requestCode) {
@@ -138,6 +153,7 @@ class AddFragment : Fragment() {
                         setupViewPager()
                     }
                 }
+
                 CAMERA_PICK_CODE -> {
                     val photo = data.extras?.get("data") as Bitmap
                     val tempUri = getImageUri(requireContext(), photo)
@@ -158,8 +174,52 @@ class AddFragment : Fragment() {
     private fun getImageUri(context: Context, bitmap: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "TempImage", null)
+        val path =
+            MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "TempImage", null)
         return Uri.parse(path)
+    }
+
+    private fun createPost() {
+        val name = binding.etArticleName.text.toString()
+        val purpose = binding.spinnerMovementType.selectedItem.toString()
+        val description = binding.etArticleDescription.text.toString()
+        val locationId =
+            locationViewModel.locations.value?.get(binding.spinnerMunicipio.selectedItemPosition)?.id
+        val categoryId =
+            categoryViewModel.categories.value?.get(binding.spinnerCategoria.selectedItemPosition)?.id
+
+        if (name.isNotBlank() && purpose.isNotBlank() && description.isNotBlank() && locationId != null && categoryId != null) {
+            publicarViewModel.createPost(
+                name,
+                purpose,
+                null, // No se necesita expectedItem
+                description,
+                locationId,
+                categoryId,
+                imageUriList,
+                "Bearer ${sharedPrefs.authToken}"
+            ).observe(viewLifecycleOwner) { success ->
+                if (success) {
+                    Toast.makeText(requireContext(), "Artículo publicado", Toast.LENGTH_SHORT)
+                        .show()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.contenedor_fragment, HomeFragment())
+                        .commit()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Error al publicar artículo",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "Por favor complete todos los campos",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     override fun onDestroyView() {
