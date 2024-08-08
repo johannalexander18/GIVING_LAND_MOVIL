@@ -12,6 +12,7 @@ import com.example.givinglandv1.MyApplication
 import com.example.givinglandv1.R
 import com.example.givinglandv1.SolicitudFragment
 import com.example.givinglandv1.UserFragment
+import com.example.givinglandv1.ui.posts.CategoryViewModel
 import com.example.givinglandv1.ui.posts.HomeFragment
 import com.example.givinglandv1.ui.posts.LocationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -19,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var locationViewModel: LocationViewModel
+    private lateinit var categoryViewModel: CategoryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +29,11 @@ class MainActivity : AppCompatActivity() {
 
         // Inicializa el ViewModel
         locationViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(LocationViewModel::class.java)
+        categoryViewModel = ViewModelProvider(this).get(CategoryViewModel::class.java)
 
+        categoryViewModel.categories.observe(this) { categories ->
+            // Aquí puedes hacer algo con las categorías si es necesario
+        }
         // Observa los cambios en los datos de ubicaciones
         locationViewModel.locations.observe(this, Observer { locations ->
             // Aquí puedes actualizar la UI con los datos de locations

@@ -2,6 +2,7 @@ package com.example.givinglandv1.data.api
 
 import com.example.givinglandv1.data.model.login.LoginRequest
 import com.example.givinglandv1.data.model.login.LoginResponse
+import com.example.givinglandv1.data.model.posts.Category
 import com.example.givinglandv1.data.model.posts.Location
 import com.example.givinglandv1.data.model.register.RegisterRequest
 import com.example.givinglandv1.data.model.register.RegisterResponse
@@ -33,5 +34,8 @@ interface UserApi {
 
     @GET("locations")
     suspend fun getLocations(): Response<List<Location>>
+
+    @GET("categories")
+    suspend fun getCategories(): Response<List<Category>>
 
 }

@@ -25,7 +25,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="650dp"
+            android:layout_height="450dp"
             android:layout_marginTop="16dp"
             android:visibility="gone"/>
 
@@ -47,17 +47,24 @@
             android:fontFamily="@font/noto_sans"/>
 
         <Spinner
-            android:id="@+id/spinner_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" />
-
-        <Spinner
             android:id="@+id/spinner_movement_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"/>
 
+        <Spinner
+            android:id="@+id/spinner_municipio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:prompt="@string/select_municipio" />
+
+        <Spinner
+            android:id="@+id/spinner_categoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:prompt="@string/select_categoria" />
         <EditText
             android:id="@+id/et_article_description"
             android:layout_width="match_parent"

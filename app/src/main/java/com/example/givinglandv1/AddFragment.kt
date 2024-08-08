@@ -14,17 +14,18 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.givinglandv1.databinding.FragmentAddBinding
+import com.example.givinglandv1.ui.posts.CategoryViewModel
 import com.example.givinglandv1.ui.posts.HomeFragment
+import com.example.givinglandv1.ui.posts.LocationViewModel
 import java.io.ByteArrayOutputStream
 
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-
 class AddFragment : Fragment() {
-
 
     private val IMAGE_PICK_CODE = 1000
     private val CAMERA_PICK_CODE = 1001
@@ -33,22 +34,17 @@ class AddFragment : Fragment() {
     private var _binding: FragmentAddBinding? = null
     private val binding get() = _binding!!
 
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var locationViewModel: LocationViewModel
+    private lateinit var categoryViewModel: CategoryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentAddBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -56,7 +52,10 @@ class AddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        imagePagerAdapter = ImagePagerAdapter(requireContext(), imageUriList)
+        imagePagerAdapter = ImagePagerAdapter(requireContext(), imageUriList) { position ->
+            imageUriList.removeAt(position)
+            setupViewPager()
+        }
         binding.viewPager.adapter = imagePagerAdapter
 
         binding.btnUploadPhoto.setOnClickListener {
@@ -73,27 +72,44 @@ class AddFragment : Fragment() {
         }
 
         binding.btnCancel.setOnClickListener {
-            // Navigate to home fragment
             parentFragmentManager.beginTransaction()
                 .replace(R.id.contenedor_fragment, HomeFragment())
                 .commit()
         }
 
         binding.btnPublish.setOnClickListener {
-            // Handle publish logic here
             Toast.makeText(requireContext(), "Artículo publicado", Toast.LENGTH_SHORT).show()
         }
 
         // Set up spinners
-        val categories = arrayOf("Ropa", "Vehículos", "Teléfonos", "Joyas")
-        val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categories)
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerCategory.adapter = categoryAdapter
-
         val movements = arrayOf("Donaciones", "Intercambio")
         val movementAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, movements)
         movementAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerMovementType.adapter = movementAdapter
+
+        // Initialize ViewModels
+        locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
+        categoryViewModel = ViewModelProvider(this).get(CategoryViewModel::class.java)
+
+        // Observe categories
+        categoryViewModel.categories.observe(viewLifecycleOwner) { categories ->
+            val categoryNames = categories.map { it.name }
+            val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryNames)
+            categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerCategoria.adapter = categoryAdapter
+        }
+
+        // Observe locations
+        locationViewModel.locations.observe(viewLifecycleOwner) { locations ->
+            val locationNames = locations.map { it.municipio }
+            val locationAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, locationNames)
+            locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerMunicipio.adapter = locationAdapter
+        }
+
+        // Load data
+        locationViewModel.loadLocations()
+        categoryViewModel.loadCategories()
     }
 
     private fun openCamera() {
@@ -110,6 +126,10 @@ class AddFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && data != null) {
+            if (imageUriList.size >= 5) {
+                Toast.makeText(requireContext(), "Solo puedes subir un máximo de 5 imágenes", Toast.LENGTH_SHORT).show()
+                return
+            }
             when (requestCode) {
                 IMAGE_PICK_CODE -> {
                     val selectedImageUri = data.data
@@ -132,31 +152,18 @@ class AddFragment : Fragment() {
 
     private fun setupViewPager() {
         imagePagerAdapter.notifyDataSetChanged()
-        binding.viewPager.visibility = View.VISIBLE
+        binding.viewPager.visibility = if (imageUriList.isNotEmpty()) View.VISIBLE else View.GONE
     }
 
-    private fun getImageUri(context: Context, inImage: Bitmap): Uri? {
+    private fun getImageUri(context: Context, bitmap: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(context.contentResolver, inImage, "Title", null)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "TempImage", null)
         return Uri.parse(path)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
