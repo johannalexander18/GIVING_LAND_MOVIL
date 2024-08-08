@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.givinglandv1.data.api.RetrofitInstance
 import com.example.givinglandv1.data.model.user.ProfileResponse
 import com.example.givinglandv1.data.model.user.User
+import com.example.givinglandv1.data.model.user.posts.Post
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -19,6 +20,9 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _profile = MutableLiveData<ProfileResponse?>()
     val profile: LiveData<ProfileResponse?> = _profile
+
+    private val _userPosts = MutableLiveData<List<Post>?>()
+    val userPosts: LiveData<List<Post>?> = _userPosts
 
     fun getUser(token: String): LiveData<User?> {
         viewModelScope.launch {
@@ -50,5 +54,20 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
         return profile
+    }
+
+    fun getUserPosts(userId: Int) {
+        viewModelScope.launch {
+            try {
+                val response = RetrofitInstance.api.getUserPosts(userId)
+                if (response.isSuccessful) {
+                    _userPosts.postValue(response.body()?.posts)
+                } else {
+                    _userPosts.postValue(null)
+                }
+            } catch (e: Exception) {
+                _userPosts.postValue(null)
+            }
+        }
     }
 }

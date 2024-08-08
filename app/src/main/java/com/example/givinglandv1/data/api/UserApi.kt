@@ -9,6 +9,7 @@ import com.example.givinglandv1.data.model.register.RegisterResponse
 import com.example.givinglandv1.data.model.user.User
 import com.example.givinglandv1.data.model.posts.Post
 import com.example.givinglandv1.data.model.user.ProfileResponse
+import com.example.givinglandv1.data.model.user.posts.UserPostsResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -40,6 +41,13 @@ interface UserApi {
 
     @GET("categories")
     suspend fun getCategories(): Response<List<Category>>
+
+    @GET("users/{id}")
+    suspend fun getUserPosts(
+        @Path("id") id: Int,
+        @Query("included") included: String = "posts.images"
+    ): Response<UserPostsResponse>
+
 
     @Multipart
     @POST("posts")
