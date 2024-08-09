@@ -20,7 +20,7 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     fun register(name: String, email: String, password: String, passwordConfirmation: String) {
         viewModelScope.launch {
             try {
-                val response = RetrofitInstance.api.register(
+                val response = RetrofitInstance.api.users(
                     RegisterRequest(name, email, password, passwordConfirmation)
                 )
                 if (response.isSuccessful) {

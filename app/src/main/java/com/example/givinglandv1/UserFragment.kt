@@ -1,5 +1,6 @@
 package com.example.givinglandv1
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +42,11 @@ class UserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.configButton.setOnClickListener {
+            val intent = Intent(activity, ConfigurationActivity::class.java)
+            startActivity(intent)
+        }
 
         val token = sharedPrefs.authToken
         token?.let {
