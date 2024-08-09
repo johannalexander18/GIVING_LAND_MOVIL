@@ -24,15 +24,7 @@
             android:src="@drawable/producto1" />
 
         <!-- Botón de favorito -->
-        <ImageButton
-            android:id="@+id/favoriteButton"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_gravity="top|end"
-            android:background="@color/coloruno"
-            android:contentDescription="@string/favorite_button"
-            android:padding="8dp"
-            android:src="@drawable/ic_favorite" />
+
     </FrameLayout>
 
     <!-- Contenedor de texto -->

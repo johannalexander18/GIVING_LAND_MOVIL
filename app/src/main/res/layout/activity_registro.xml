@@ -56,11 +56,4 @@
         android:fontFamily="@font/noto_sans"
         android:backgroundTint="@color/colordos"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Registrarse con Google"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/noto_sans"
-        android:backgroundTint="@color/colordos"/>
 </LinearLayout>

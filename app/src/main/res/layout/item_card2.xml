@@ -53,16 +53,17 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="14sp"
-            android:paddingBottom="4dp"/>
+            android:paddingBottom="4dp"
+            />
 
         <TextView
             android:id="@+id/itemAdditional"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Intercambio"
-            android:textColor="@android:color/holo_green_dark"
+            android:textColor="@color/colordos"
             android:textSize="14sp"
-            android:paddingBottom="4dp"/>
+            android:paddingBottom="4dp" />
 
         <TextView
             android:id="@+id/itemLocation"

@@ -45,12 +45,6 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/colordos"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Iniciar sesión con Google"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/colordos"/>
 
     <TextView
         android:layout_width="wrap_content"
