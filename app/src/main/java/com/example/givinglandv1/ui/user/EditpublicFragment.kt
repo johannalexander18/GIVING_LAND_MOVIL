@@ -22,38 +22,38 @@ import com.example.givinglandv1.ui.posts.HomeFragment
 import com.example.givinglandv1.ui.posts.LocationViewModel
 import java.io.ByteArrayOutputStream
 
-
 class EditpublicFragment : Fragment() {
 
     private val IMAGE_PICK_CODE = 1000
     private val CAMERA_PICK_CODE = 1001
-    private val imageUriList = mutableListOf<Uri>()
     private lateinit var imagePagerAdapter: ImagePagerAdapter
     private var _binding: FragmentEditpublicBinding? = null
     private val binding get() = _binding!!
-
 
     private lateinit var locationViewModel: LocationViewModel
     private lateinit var categoryViewModel: CategoryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentEditpublicBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        imagePagerAdapter = ImagePagerAdapter(requireContext(), imageUriList) { position ->
-            imageUriList.removeAt(position)
+
+        // Cargar imágenes desde argumentos
+        val imageUrls = arguments?.getStringArrayList("postImages") ?: arrayListOf()
+
+        // Inicializar el ImagePagerAdapter con la lista de URLs
+        imagePagerAdapter = ImagePagerAdapter(requireContext(), imageUrls) { position ->
+            imageUrls.removeAt(position)
             setupViewPager()
         }
         binding.viewPager.adapter = imagePagerAdapter
@@ -70,7 +70,6 @@ class EditpublicFragment : Fragment() {
             }
             builder.show()
         }
-
 
         val movements = arrayOf("Donaciones", "Intercambio")
         val movementAdapter =
@@ -103,6 +102,42 @@ class EditpublicFragment : Fragment() {
         // Load data
         locationViewModel.loadLocations()
         categoryViewModel.loadCategories()
+
+        // Cargar datos del post desde los argumentos
+        binding.etArticleName.setText(arguments?.getString("postName"))
+        binding.etArticleDescription.setText(arguments?.getString("postDescription"))
+
+        // Establecer propósito en el spinner
+        val purpose = arguments?.getString("postPurpose")
+        if (purpose != null) {
+            val purposeIndex = movements.indexOf(purpose)
+            if (purposeIndex >= 0) {
+                binding.spinnerMovementType.setSelection(purposeIndex)
+            }
+        }
+
+        // Establecer el municipio en el spinner
+        val locationId = arguments?.getInt("postLocationId") ?: -1
+        locationViewModel.locations.observe(viewLifecycleOwner) { locations ->
+            val selectedLocation = locations.find { it.id == locationId }
+            val locationIndex = locations.indexOf(selectedLocation)
+            if (locationIndex >= 0) {
+                binding.spinnerMunicipio.setSelection(locationIndex)
+            }
+        }
+
+        // Establecer la categoría en el spinner
+        val categoryId = arguments?.getInt("postCategoryId") ?: -1
+        categoryViewModel.categories.observe(viewLifecycleOwner) { categories ->
+            val selectedCategory = categories.find { it.id == categoryId }
+            val categoryIndex = categories.indexOf(selectedCategory)
+            if (categoryIndex >= 0) {
+                binding.spinnerCategoria.setSelection(categoryIndex)
+            }
+        }
+
+        // Configurar ViewPager con las imágenes cargadas
+        setupViewPager()
     }
 
     private fun openCamera() {
@@ -119,7 +154,7 @@ class EditpublicFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && data != null) {
-            if (imageUriList.size >= 5) {
+            if (imagePagerAdapter.itemCount >= 5) {
                 Toast.makeText(
                     requireContext(),
                     "Solo puedes subir un máximo de 5 imágenes",
@@ -131,7 +166,7 @@ class EditpublicFragment : Fragment() {
                 IMAGE_PICK_CODE -> {
                     val selectedImageUri = data.data
                     selectedImageUri?.let {
-                        imageUriList.add(it)
+                        imagePagerAdapter.images.add(it.toString())
                         setupViewPager()
                     }
                 }
@@ -140,7 +175,7 @@ class EditpublicFragment : Fragment() {
                     val photo = data.extras?.get("data") as Bitmap
                     val tempUri = getImageUri(requireContext(), photo)
                     tempUri?.let {
-                        imageUriList.add(it)
+                        imagePagerAdapter.images.add(it.toString())
                         setupViewPager()
                     }
                 }
@@ -150,7 +185,7 @@ class EditpublicFragment : Fragment() {
 
     private fun setupViewPager() {
         imagePagerAdapter.notifyDataSetChanged()
-        binding.viewPager.visibility = if (imageUriList.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.viewPager.visibility = if (imagePagerAdapter.itemCount > 0) View.VISIBLE else View.GONE
     }
 
     private fun getImageUri(context: Context, bitmap: Bitmap): Uri? {
@@ -166,4 +201,3 @@ class EditpublicFragment : Fragment() {
         _binding = null
     }
 }
-

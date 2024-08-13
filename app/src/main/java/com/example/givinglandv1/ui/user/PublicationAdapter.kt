@@ -1,6 +1,7 @@
 package com.example.givinglandv1.ui.user
 
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -19,8 +20,23 @@ class PublicationAdapter(
     inner class ViewHolder(val binding: ItemCard2Binding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.editButton.setOnClickListener {
-                // Navegar al fragmento de edición
                 val fragment = EditpublicFragment()
+
+                // Obtener el post asociado a este ViewHolder
+                val post = posts[adapterPosition]
+
+                // Pasar los datos al fragmento
+                val bundle = Bundle().apply {
+                    putStringArrayList("postImages", ArrayList(post.images.map { it.url }))
+                    putString("postName", post.name)
+                    putString("postDescription", post.description)
+                    putString("postPurpose", post.purpose)
+                    putInt("postLocationId", post.location_id)
+                    putInt("postCategoryId", post.category_id)
+                }
+                fragment.arguments = bundle
+
+                // Navegar al fragmento de edición
                 val transaction = (it.context as MainActivity).supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.contenedor_fragment, fragment)
                 transaction.addToBackStack(null)
