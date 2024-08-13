@@ -49,6 +49,12 @@ interface UserApi {
     ): Response<UserPostsResponse>
 
 
+    @DELETE("posts/{id}")
+    suspend fun deletePost(
+        @Header("Authorization") authToken: String,
+        @Path("id") postId: Int
+    ): Response<ResponseBody>
+
     @Multipart
     @POST("posts")
     suspend fun createPost(

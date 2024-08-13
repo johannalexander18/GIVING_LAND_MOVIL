@@ -16,10 +16,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.givinglandv1.R
+import com.example.givinglandv1.data.model.posts.Category
+import com.example.givinglandv1.data.model.posts.Location
 import com.example.givinglandv1.databinding.FragmentEditpublicBinding
 import com.example.givinglandv1.ui.posts.CategoryViewModel
 import com.example.givinglandv1.ui.posts.HomeFragment
 import com.example.givinglandv1.ui.posts.LocationViewModel
+import com.example.givinglandv1.util.SharedPrefs
 import java.io.ByteArrayOutputStream
 
 class EditpublicFragment : Fragment() {
@@ -32,9 +35,15 @@ class EditpublicFragment : Fragment() {
 
     private lateinit var locationViewModel: LocationViewModel
     private lateinit var categoryViewModel: CategoryViewModel
+    private lateinit var userViewModel: UserViewModel
+    private lateinit var sharedPrefs: SharedPrefs
+    private var postId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        sharedPrefs = SharedPrefs(requireContext())
+        postId = arguments?.getInt("postId") ?: -1
     }
 
     override fun onCreateView(
@@ -138,6 +147,12 @@ class EditpublicFragment : Fragment() {
 
         // Configurar ViewPager con las imágenes cargadas
         setupViewPager()
+
+        binding.btnDelate.setOnClickListener {
+            deletePost()
+        }
+
+        observeViewModel()
     }
 
     private fun openCamera() {
@@ -181,6 +196,35 @@ class EditpublicFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun deletePost() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Eliminar publicación")
+            .setMessage("¿Estás seguro de que quieres eliminar esta publicación?")
+            .setPositiveButton("Sí") { _, _ ->
+                sharedPrefs.authToken?.let { token ->
+                    userViewModel.deletePost(token, postId)
+                }
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun observeViewModel() {
+
+        userViewModel.deletePostResult.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                Toast.makeText(context, "Publicación eliminada con éxito", Toast.LENGTH_SHORT).show()
+                navigateBack()
+            } else {
+                Toast.makeText(context, "Error al eliminar la publicación", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun navigateBack() {
+        parentFragmentManager.popBackStack()
     }
 
     private fun setupViewPager() {

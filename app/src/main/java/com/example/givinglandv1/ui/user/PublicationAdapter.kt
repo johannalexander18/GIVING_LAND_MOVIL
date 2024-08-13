@@ -27,6 +27,7 @@ class PublicationAdapter(
 
                 // Pasar los datos al fragmento
                 val bundle = Bundle().apply {
+                    putInt("postId", post.id)
                     putStringArrayList("postImages", ArrayList(post.images.map { it.url }))
                     putString("postName", post.name)
                     putString("postDescription", post.description)
