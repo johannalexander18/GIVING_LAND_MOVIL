@@ -57,7 +57,7 @@ class PublicationAdapter(
 
         if (firstImage != null) {
             Glide.with(holder.itemView.context)
-                .load("http://192.168.0.14:8001/storage/$firstImage")
+                .load("http://10.185.208.100:8001/storage/$firstImage")
                 .error(R.drawable.ic_user)
                 .into(holder.binding.itemImage)
         }
