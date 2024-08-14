@@ -24,11 +24,12 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     private val _userPosts = MutableLiveData<List<Post>?>()
     val userPosts: LiveData<List<Post>?> = _userPosts
 
-    private val _updatePostResult = MutableLiveData<Boolean>()
-    val updatePostResult: LiveData<Boolean> = _updatePostResult
 
     private val _deletePostResult = MutableLiveData<Boolean>()
     val deletePostResult: LiveData<Boolean> = _deletePostResult
+
+    private val _updatePostResult = MutableLiveData<Boolean>()
+    val updatePostResult: LiveData<Boolean> = _updatePostResult
 
     fun getUser(token: String): LiveData<User?> {
         viewModelScope.launch {
@@ -85,6 +86,17 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
                 _deletePostResult.postValue(response.isSuccessful)
             } catch (e: Exception) {
                 _deletePostResult.postValue(false)
+            }
+        }
+    }
+
+    fun updatePost(token: String, postId: Int, name: String, description: String) {
+        viewModelScope.launch {
+            try {
+                val response = RetrofitInstance.api.updatePost("Bearer $token", postId, name, description)
+                _updatePostResult.postValue(response.isSuccessful)
+            } catch (e: Exception) {
+                _updatePostResult.postValue(false)
             }
         }
     }

@@ -48,6 +48,14 @@ interface UserApi {
         @Query("included") included: String = "posts.images"
     ): Response<UserPostsResponse>
 
+    @FormUrlEncoded
+    @PUT("posts/{id}")
+    suspend fun updatePost(
+        @Header("Authorization") authToken: String,
+        @Path("id") postId: Int,
+        @Field("name") name: String,
+        @Field("description") description: String
+    ): Response<ResponseBody>
 
     @DELETE("posts/{id}")
     suspend fun deletePost(

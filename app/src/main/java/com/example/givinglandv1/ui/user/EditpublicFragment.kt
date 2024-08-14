@@ -38,6 +38,9 @@ class EditpublicFragment : Fragment() {
     private lateinit var userViewModel: UserViewModel
     private lateinit var sharedPrefs: SharedPrefs
     private var postId: Int = -1
+    private var purpose: String = ""
+    private var locationId: Int = -1
+    private var categoryId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -148,6 +151,10 @@ class EditpublicFragment : Fragment() {
         // Configurar ViewPager con las imágenes cargadas
         setupViewPager()
 
+        binding.btnEdit.setOnClickListener {
+            updatePost()
+        }
+
         binding.btnDelate.setOnClickListener {
             deletePost()
         }
@@ -198,6 +205,21 @@ class EditpublicFragment : Fragment() {
         }
     }
 
+    private fun updatePost() {
+        val name = binding.etArticleName.text.toString()
+        val description = binding.etArticleDescription.text.toString()
+
+        if (name.isBlank() || description.isBlank()) {
+            Toast.makeText(context, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        sharedPrefs.authToken?.let { token ->
+            userViewModel.updatePost(token, postId, name, description)
+        }
+    }
+
+
     private fun deletePost() {
         AlertDialog.Builder(requireContext())
             .setTitle("Eliminar publicación")
@@ -212,6 +234,16 @@ class EditpublicFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+
+        userViewModel.updatePostResult.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                Toast.makeText(context, "Publicación actualizada con éxito", Toast.LENGTH_SHORT).show()
+                navigateBack()
+            } else {
+                Toast.makeText(context, "Error al actualizar la publicación", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
         userViewModel.deletePostResult.observe(viewLifecycleOwner) { success ->
             if (success) {
