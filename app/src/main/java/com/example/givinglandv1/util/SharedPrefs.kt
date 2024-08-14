@@ -48,4 +48,7 @@ class SharedPrefs(context: Context) {
         }
         return null
     }
+    fun clearAuthToken() {
+        prefs.edit().remove("auth_token").apply()
+    }
 }

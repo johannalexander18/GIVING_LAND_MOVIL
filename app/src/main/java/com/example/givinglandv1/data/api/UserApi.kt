@@ -9,6 +9,8 @@ import com.example.givinglandv1.data.model.register.RegisterResponse
 import com.example.givinglandv1.data.model.user.User
 import com.example.givinglandv1.data.model.posts.Post
 import com.example.givinglandv1.data.model.user.ProfileResponse
+import com.example.givinglandv1.data.model.user.delate.DeleteAccountRequest
+import com.example.givinglandv1.data.model.user.delate.DeleteAccountResponse
 import com.example.givinglandv1.data.model.user.posts.UserPostsResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -76,4 +78,11 @@ interface UserApi {
         @Part images: List<MultipartBody.Part>
     ): Response<ResponseBody>
 
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", path = "user", hasBody = true)
+    suspend fun deleteAccount(
+        @Header("Authorization") authToken: String,
+        @Field("password") password: String,
+        @Field("password_confirmation") passwordConfirmation: String
+    ): Response<DeleteAccountResponse>
 }
